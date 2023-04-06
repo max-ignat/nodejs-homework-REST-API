@@ -4,7 +4,8 @@ const cors = require("cors");
 const fs = require('fs')
 const path = require('path')
 const contactsRouter = require("./routes/api/contacts");
-// const contacts = require("./models/contacts.json");
+const dotenv = require("dotenv");
+dotenv.config();
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -23,7 +24,7 @@ app.use(logger("combined", { stream: accessLogStream }), (req, res, next) => {
 app.use("/api/contacts", contactsRouter);
 
 app.use((err, req, res, next) => {
-  // const { status = 500, message = "Server message" } = error;
+
   res.status(500).json({ message: err.message });
 });
 
