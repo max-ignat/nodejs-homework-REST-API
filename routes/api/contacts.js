@@ -10,7 +10,10 @@ router.get("/:id", ctrl.getContactById);
 
 router.post("/", validateBody(schema.contactAddSchema), ctrl.addContact);
 
-router.put("/:id",validateBody(schema.contactAddSchema), ctrl.updateContactById);
+
+router.put("/:id", validateBody(schema.contactAddSchema), ctrl.updateContactById);
+
+router.patch("/:id/favorite", validateBody(schema.updateFavoriteSchema), ctrl.updateFavoriteById)
 
 router.delete("/:id", ctrl.deleteContactById);
 

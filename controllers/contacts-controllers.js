@@ -1,7 +1,7 @@
 // const mongoose = require("mongoose");
 const { ctrlWrapper, HttpError } = require("../helpers");
 // const contacts = require("../models/contact");
-const {Contact} = require("../models/contact");
+const { Contact } = require("../models/contact");
 
 const getAllContontacts = async (req, res) => {
   const result = await Contact.find();
@@ -11,7 +11,7 @@ const getAllContontacts = async (req, res) => {
 const getContactById =  async (req, res, ) => {
 
         const { id } = req.params;
-        const result = await Contact.findById(id);
+        const result = await Contact.findById({_id: id});
         if (!result) {
           throw HttpError(404);
         }
@@ -28,15 +28,22 @@ const addContact = async (req, res, ) => {
 const updateContactById = async (req, res, ) => {
 
         const { id } = req.params;
-        const result = await Contact.updateContacts(id, req.body);
+        const result = await Contact.findByIdAndUpdate(id, req.body, {new : true});
         res.status(200).json(result);
 
     };
 
+
+    const updateFavoriteById = async (req, res) => {
+      const { id } = req.params;
+      const result = await Contact.findByIdAndUpdate(id, req.body, {new: true});
+      res.status(200).json(result);
+};
+    
 const deleteContactById = async (req, res, ) => {
 
         const { id } = req.params;
-        const result = await Contact.removeContact(id);
+        const result = await Contact.findByIdAndDelete(id);
         if (!result) {
           throw HttpError(404);
         }
@@ -44,10 +51,13 @@ const deleteContactById = async (req, res, ) => {
 
     };
 
+
+
 module.exports = {
   getAllContontacts: ctrlWrapper(getAllContontacts),
   getContactById: ctrlWrapper(getContactById),
   addContact: ctrlWrapper(addContact),
   updateContactById: ctrlWrapper(updateContactById),
   deleteContactById: ctrlWrapper(deleteContactById),
+  updateFavoriteById: ctrlWrapper(updateFavoriteById),
 };
