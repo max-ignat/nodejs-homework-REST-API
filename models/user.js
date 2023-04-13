@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 const { Schema, model } = require("mongoose");
-const { handleMongoError } = require("../helpers");
+const  handleMongoError  = require("../helpers/handleMongoError");
 const Joi = require("joi");
 
 
@@ -27,6 +27,7 @@ const userSchema = new Schema(
   },
   { versionKey: false, timestamps: true }
 );
+
 userSchema.post("save", handleMongoError);
 
 const userRegisterSchema = Joi.object({
