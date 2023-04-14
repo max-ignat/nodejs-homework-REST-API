@@ -4,6 +4,7 @@ const cors = require("cors");
 const fs = require('fs')
 const path = require('path')
 const contactsRouter = require("./routes/api/contacts");
+const usersRouter = require("./routes/api/users");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
@@ -22,7 +23,7 @@ app.use(logger("combined", { stream: accessLogStream }), (req, res, next) => {
   next();
 });
 app.use("/api/contacts", contactsRouter);
-
+app.use("/api/users", usersRouter);
 app.use((err, req, res, next) => {
   const { status = 500, message = "Oops srver error! " } = err;
   
