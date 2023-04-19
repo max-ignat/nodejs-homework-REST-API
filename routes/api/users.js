@@ -12,5 +12,5 @@ router.post("/login",validateBody(schema.userLoginSchema),  ctrl.login)
 router.post("/logout", isLogin, ctrl.logout)
 
 router.get("/current" , isLogin, ctrl.getCurrent);
-router.post('/avatars', isLogin, upload.single('avatar'), ctrl.upload)
+router.patch('/avatars', isLogin, upload.single('avatar'), ctrl.upload)
 module.exports = router;

@@ -3,11 +3,11 @@ const { ctrlWrapper, HttpError } = require("../helpers");
 const path = require('path')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { v4: uuid } = require("uuid");
+// const { v4: uuid } = require("uuid");
 
 require("dotenv").config();
 const fs = require("fs/promises");
-// const gravatar = require("gravatar")
+const gravatar = require("gravatar")
 const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
@@ -17,9 +17,9 @@ const register = async (req, res) => {
   if (user) {
     throw HttpError(409, "e-mail already in use");
   }
-
+  const avatarURL = gravatar.url(email)
   const createHashPass = await bcrypt.hash(password, 10);
-  const newUser = await User.create({ ...req.body, password: createHashPass });
+  const newUser = await User.create({ ...req.body, password: createHashPass , avatarURL});
 
   res.status(201).json({
     name: newUser.name,
@@ -63,18 +63,15 @@ const logout = async (req, res) => {
 const avatarDir = path.join(__dirname, "../", "public", "avatars");
 
 const upload = async (req, res,) => {
+  const {_id} = req.user
   const { path: tempUpload, filename } = req.file;
-  const resultUpload = path.join(avatarDir, filename);
+  const avatarName = `${_id}_${filename}`
+  const resultUpload = path.join(avatarDir, avatarName);
   try {
     await fs.rename(tempUpload, resultUpload);
-    const avatar = path.join("public", "avatars", filename)
-    const newUser = {
-      _id: uuid(),
-      ...req.body,
-      avatar,
-   }
-    // console.log(gravatar)
-    res.json(newUser);
+    const avatarURL = path.join("public", "avatars", avatarName);
+    await User.findOneAndUpdate(_id, { avatarURL });
+res.json({avatarURL})
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error " });
