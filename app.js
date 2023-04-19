@@ -17,6 +17,9 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, "access.log"),
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"))
+
+
 
 
 app.use(logger("combined", { stream: accessLogStream }), (req, res, next) => {

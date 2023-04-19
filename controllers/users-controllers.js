@@ -1,10 +1,13 @@
 const { User } = require("../models/user");
 const { ctrlWrapper, HttpError } = require("../helpers");
+const path = require('path')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
-// console.log(process.env)
+const { v4: uuid } = require("uuid");
 
+require("dotenv").config();
+const fs = require("fs/promises");
+// const gravatar = require("gravatar")
 const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
@@ -56,9 +59,32 @@ const logout = async (req, res) => {
     message: "Bye! Logout success"
   })
 }
-  (module.exports = {
+
+const avatarDir = path.join(__dirname, "../", "public", "avatars");
+
+const upload = async (req, res,) => {
+  const { path: tempUpload, filename } = req.file;
+  const resultUpload = path.join(avatarDir, filename);
+  try {
+    await fs.rename(tempUpload, resultUpload);
+    const avatar = path.join("public", "avatars", filename)
+    const newUser = {
+      _id: uuid(),
+      ...req.body,
+      avatar,
+   }
+    // console.log(gravatar)
+    res.json(newUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error " });
+  }
+};
+
+  module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
     getCurrent: ctrlWrapper(getCurrent),
     logout: ctrlWrapper(logout),
-  });
+    upload: ctrlWrapper(upload),
+  };
