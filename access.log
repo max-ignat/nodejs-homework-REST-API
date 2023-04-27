@@ -1,0 +1,6 @@
+::1 - - [27/Apr/2023:17:18:27 +0000] "POST /api/users/register HTTP/1.1" 201 50 "-" "PostmanRuntime/7.32.2"
+::1 - - [27/Apr/2023:17:19:00 +0000] "GET /api/auth/verify/ab73aa43-e457-4e82-aae0-9243fa9c234b HTTP/1.1" 404 191 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+::1 - - [27/Apr/2023:17:20:46 +0000] "POST /api/users/register HTTP/1.1" 201 50 "-" "PostmanRuntime/7.32.2"
+::1 - - [27/Apr/2023:17:23:25 +0000] "POST /api/users/register HTTP/1.1" 201 50 "-" "PostmanRuntime/7.32.2"
+::1 - - [27/Apr/2023:17:35:48 +0000] "POST /api/users/register HTTP/1.1" 201 50 "-" "PostmanRuntime/7.32.2"
+::1 - - [27/Apr/2023:17:36:48 +0000] "POST /api/users/register HTTP/1.1" 500 58 "-" "PostmanRuntime/7.32.2"

@@ -22,13 +22,13 @@ const register = async (req, res) => {
 
   const verificationCode = uuid();
 
-  console.log("verificationCode", verificationCode);
+  
 
   const newUser = await User.create({ ...req.body, password: createHashPass , avatarURL, verificationCode});
 
   const verifyEmail = {
     to: email,
-    subject: "Verify email",
+    subject: "Verify your email",
     html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationCode}">Click verify email</a>`,
   };
 
@@ -37,6 +37,7 @@ const register = async (req, res) => {
   res.status(201).json({
     name: newUser.name,
     email: newUser.email,
+    
   });
 };
 
