@@ -22,6 +22,8 @@ const register = async (req, res) => {
 
   const verificationCode = uuid();
 
+  console.log("verificationCode", verificationCode);
+
   const newUser = await User.create({ ...req.body, password: createHashPass , avatarURL, verificationCode});
 
   const verifyEmail = {
