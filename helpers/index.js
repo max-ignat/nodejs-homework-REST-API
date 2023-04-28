@@ -3,7 +3,8 @@ const ctrlWrapper = require('./ctrlWrapper')
 const validateBody = require('./validateBody')
 const handleMongoError = require("./handleMongoError")
 const isLogin = require('./isLogin')
-const upload = require('./upload')
+const upload = require("./upload")
+const sendEmail = require("./sendMail")
 module.exports = {
   HttpError,
   ctrlWrapper,
@@ -11,4 +12,5 @@ module.exports = {
   handleMongoError,
   isLogin,
   upload,
+  sendEmail,
 };
